@@ -32,6 +32,11 @@ public class Captcha {
         upload = new Upload();
     }
 
+    /**
+     *
+     * @param iframe captcha iframe
+     * @param checkbox captcha checkbox
+     */
     public Captcha selectCaptchaCheckbox(WebElement iframe, WebElement checkbox) throws InterruptedException {
         handleIframe.switchToIframe(iframe);
         checkbox.click();
@@ -42,12 +47,26 @@ public class Captcha {
         return this;
     }
 
+    /**
+     *
+     * @param challengeIframe challenge iframe
+     * @param audioBtn audio button, click audio button to switch to audio challenge
+     */
     public Captcha switchToAudioChallenge(WebElement challengeIframe, WebElement audioBtn) {
         handleIframe.switchToIframe(challengeIframe);
         audioBtn.click();
         return this;
     }
 
+    /**
+     *
+     * @param audioHref audio url
+     * @param convertUploadAudioBtn upload audio button at Speech to text demo page
+     * @param convertTextResult text result at Speech to text demo page
+     * @param answerTextBox textbox at audio challenge popup
+     * @param verifyBtn verify button at audio challenge popup
+     * @param challengeIframe audio challenge frame
+     */
     public void completeAudioChallengeMessage(WebElement audioHref,
                                               WebElement convertUploadAudioBtn,
                                               WebElement convertTextResult,
