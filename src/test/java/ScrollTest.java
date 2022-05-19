@@ -1,8 +1,12 @@
 import common.captcha.Captcha;
-import common.tabs.HandleMultipleTabs;
 import common.scrollbar.Scroll;
+import common.tabs.HandleMultipleTabs;
 import driver.InitWebdriver;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
 
 import java.awt.*;
@@ -11,7 +15,7 @@ import java.util.List;
 import static java.lang.Thread.sleep;
 import static links.Paths.URL_TEST_CAPTCHA;
 
-public class scrollTest {
+public class ScrollTest {
     @Test
     public void test() throws InterruptedException {
         InitWebdriver initWebdriver = new InitWebdriver();
@@ -55,5 +59,29 @@ public class scrollTest {
                         element.AUDIO_VERIFY,
                         element.CHALLENGE_IFRAME);
     }
+
+
+    @Test
+    public void testScr() {
+        InitWebdriver initWebdriver = new InitWebdriver();
+        WebDriver driver = initWebdriver.getWebdriver("chrome", "false");
+        driver.get("https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp");
+        Actions act = new Actions(driver);
+        Scroll scroll = new Scroll(driver);
+        WebElement element = driver.findElement(By.cssSelector(" div>div.horscroll"));
+        act.dragAndDropBy(element, 500, 0).release().perform();
+//        element.click();
+//        scroll.tableScroll(element);
+    }
+
+    @Test
+    public void test3() {
+        InitWebdriver initWebdriver = new InitWebdriver();
+        WebDriver driver = initWebdriver.getWebdriver("chrome", "false");
+//        DevTools devTools = driver.getDevTools();
+        driver.get("https://www.w3schools.com/howto/howto_css_menu_horizontal_scroll.asp");
+
+    }
+
 
 }

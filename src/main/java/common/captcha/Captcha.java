@@ -1,6 +1,5 @@
 package common.captcha;
 
-import common.download.DownloadFiles;
 import common.iframe.HandleIframe;
 import common.scrollbar.Scroll;
 import common.tabs.HandleMultipleTabs;
@@ -11,13 +10,13 @@ import org.openqa.selenium.WebElement;
 import java.awt.*;
 import java.nio.file.Paths;
 
+import static common.download.DownloadFiles.downloadFile;
 import static java.lang.Thread.sleep;
 import static links.Paths.SPEECH_TO_TEXT_URL;
 
 public class Captcha {
     HandleMultipleTabs handleTab;
     HandleIframe handleIframe;
-    DownloadFiles download;
     WebDriver driver;
     Scroll scroll;
     Upload upload;
@@ -27,7 +26,6 @@ public class Captcha {
         this.driver = driver;
         handleTab = new HandleMultipleTabs(driver);
         handleIframe = new HandleIframe(driver);
-        download = new DownloadFiles();
         scroll = new Scroll(driver);
         upload = new Upload();
     }
@@ -52,9 +50,13 @@ public class Captcha {
      * @param challengeIframe challenge iframe
      * @param audioBtn audio button, click audio button to switch to audio challenge
      */
-    public Captcha switchToAudioChallenge(WebElement challengeIframe, WebElement audioBtn) {
+    public Captcha switchToAudioChallenge(WebElement challengeIframe, WebElement audioBtn) throws InterruptedException {
         handleIframe.switchToIframe(challengeIframe);
         audioBtn.click();
+        driver.switchTo().defaultContent();
+
+        //wait audio challenge captcha loading
+        sleep(3000);
         return this;
     }
 
@@ -72,11 +74,12 @@ public class Captcha {
                                               WebElement convertTextResult,
                                               WebElement answerTextBox,
                                               WebElement verifyBtn, WebElement challengeIframe) throws InterruptedException, AWTException {
+        handleIframe.switchToIframe(challengeIframe);
         String Url = audioHref.getAttribute("href");
-        download.downloadFile(Url, path);
+        downloadFile(Url, path);
         handleTab.openURLOnNewTab(SPEECH_TO_TEXT_URL, 1);
         sleep(3000);
-        scroll.pageScroll("document.body.scrollHeight)");
+        scroll.pageScroll("document.body.scrollHeight");
         upload.uploadFileByRobot(convertUploadAudioBtn, path);
         sleep(10000);
         String audioMess = convertTextResult.getText();

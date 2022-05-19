@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class DownloadFiles {
-    public void downloadFile(String Url, String filePath) {
+    public static void downloadFile(String Url, String filePath) {
         try (BufferedInputStream inputStream = new BufferedInputStream(new URL(Url).openStream());
              FileOutputStream fileOS = new FileOutputStream(filePath)) {
             byte[] data = new byte[1024];
