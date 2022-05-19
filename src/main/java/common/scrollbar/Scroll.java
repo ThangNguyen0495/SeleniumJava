@@ -16,7 +16,7 @@ public class Scroll {
      *               <p>bottom page: document.body.scrollHeight</p>
      */
     public void pageVertical(String height) {
-        String jsScripts = "window.scrollTo(" + height + ",0)";
+        String jsScripts = "window.scrollTo(0,"+ height +")";
         ((JavascriptExecutor) driver).executeScript(jsScripts);
     }
 
