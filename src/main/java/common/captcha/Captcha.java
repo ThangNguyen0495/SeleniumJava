@@ -79,7 +79,7 @@ public class Captcha {
         downloadFile(Url, path);
         handleTab.openURLOnNewTab(SPEECH_TO_TEXT_URL, 1);
         sleep(3000);
-        scroll.pageScroll("document.body.scrollHeight");
+        scroll.pageVertical("document.body.scrollHeight");
         upload.uploadFileByRobot(convertUploadAudioBtn, path);
         sleep(10000);
         String audioMess = convertTextResult.getText();
